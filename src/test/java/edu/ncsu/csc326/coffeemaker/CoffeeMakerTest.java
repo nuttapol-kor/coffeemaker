@@ -29,7 +29,7 @@ import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
 /**
  * Unit tests for CoffeeMaker class.
  * 
- * @author Sarah Heckman
+ * @author Nuttapol Korcharoenrat 6210546404
  */
 public class CoffeeMakerTest {
 	
