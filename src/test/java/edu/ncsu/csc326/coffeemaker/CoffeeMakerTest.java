@@ -362,6 +362,16 @@ public class CoffeeMakerTest {
 	}
 
 	/**
+	 * Given null recipe to make coffee
+	 * Then we got money
+	 */
+	@Test
+	public void testMakeCoffeeWithNullRecipe() {
+		int change = coffeeMaker.makeCoffee(0, 100); // point to null recipe
+		assertEquals(100, change);
+	}
+
+	/**
 	 * Given one recipe to Coffee Maker
 	 * When user purchase beverage the ingredient in inventory should decrease with require ingredient in recipe.
 	 */
