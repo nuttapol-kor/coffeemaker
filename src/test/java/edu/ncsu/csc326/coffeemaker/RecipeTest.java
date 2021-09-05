@@ -42,7 +42,6 @@ public class RecipeTest {
 
     /**
      * Given a position number to setAmtChocolate()
-     * Then raise an error
      * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
      */
     @Test
@@ -75,7 +74,6 @@ public class RecipeTest {
 
     /**
      * Given a position number to setAmtCoffee()
-     * Then raise an error
      * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
      */
     @Test
@@ -108,7 +106,6 @@ public class RecipeTest {
 
     /**
      * Given a position number to setAmtMilk()
-     * Then raise an error
      * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
      */
     @Test
@@ -141,7 +138,6 @@ public class RecipeTest {
 
     /**
      * Given a position number to setAmtSugar()
-     * Then raise an error
      * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
      */
     @Test
@@ -174,7 +170,6 @@ public class RecipeTest {
 
     /**
      * Given a position number to setPrice()
-     * Then raise an error
      * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
      */
     @Test
