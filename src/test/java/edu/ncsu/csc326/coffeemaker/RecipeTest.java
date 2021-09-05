@@ -20,16 +20,31 @@ public class RecipeTest {
         recipe2 = new Recipe();
     }
 
+    /**
+     * Given a string that cannot convert to a number to setAmtChocolate()
+     * Then raise an error.
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetChocolateWithNotNumber() throws RecipeException {
         recipe1.setAmtChocolate("Chocolate");
     }
 
+    /**
+     * Given a negative number to setAmtChocolate()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetChocolateWithNegativeNumber() throws RecipeException {
         recipe1.setAmtChocolate("-1");
     }
 
+    /**
+     * Given a position number to setAmtChocolate()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test
     public void testSetChocolateWithPositiveNumber() throws RecipeException {
         recipe1.setAmtChocolate("0");
@@ -38,16 +53,31 @@ public class RecipeTest {
         assertEquals(100, recipe1.getAmtChocolate());
     }
 
+    /**
+     * Given a string that cannot convert to a number to setAmtCoffee()
+     * Then raise an error.
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetCoffeeWithNotNumber() throws RecipeException {
         recipe1.setAmtCoffee("Coffee");
     }
 
+    /**
+     * Given a negative number to setAmtCoffee()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetCoffeeWithNegativeNumber() throws RecipeException {
         recipe1.setAmtCoffee("-1");
     }
 
+    /**
+     * Given a position number to setAmtCoffee()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test
     public void testSetCoffeeWithPositiveNumber() throws RecipeException {
         recipe1.setAmtCoffee("0");
@@ -56,16 +86,31 @@ public class RecipeTest {
         assertEquals(100, recipe1.getAmtCoffee());
     }
 
+    /**
+     * Given a string that cannot convert to a number to setAmtMilk()
+     * Then raise an error.
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetMilkWithNotNumber() throws RecipeException {
         recipe1.setAmtMilk("Milk");
     }
 
+    /**
+     * Given a negative number to setAmtMilk()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetMilkWithNegativeNumber() throws RecipeException {
         recipe1.setAmtMilk("-1");
     }
 
+    /**
+     * Given a position number to setAmtMilk()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test
     public void testSetMilkWithPositiveNumber() throws RecipeException {
         recipe1.setAmtMilk("0");
@@ -74,16 +119,31 @@ public class RecipeTest {
         assertEquals(100, recipe1.getAmtMilk());
     }
 
+    /**
+     * Given a string that cannot convert to a number to setAmtSugar()
+     * Then raise an error.
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetSugarWithNotNumber() throws RecipeException {
         recipe1.setAmtSugar("Sugar");
     }
 
+    /**
+     * Given a negative number to setAmtSugar()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetSugarWithNegativeNumber() throws RecipeException {
         recipe1.setAmtSugar("-1");
     }
 
+    /**
+     * Given a position number to setAmtSugar()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test
     public void testSetSugarWithPositiveNumber() throws RecipeException {
         recipe1.setAmtSugar("0");
@@ -92,16 +152,31 @@ public class RecipeTest {
         assertEquals(100, recipe1.getAmtSugar());
     }
 
+    /**
+     * Given a string that cannot convert to a number to setPrice()
+     * Then raise an error.
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetPriceWithNotNumber() throws RecipeException {
         recipe1.setPrice("Chocolate");
     }
 
+    /**
+     * Given a negative number to setPrice()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test(expected = RecipeException.class)
     public void testSetPriceWithNegativeNumber() throws RecipeException {
         recipe1.setPrice("-1");
     }
 
+    /**
+     * Given a position number to setPrice()
+     * Then raise an error
+     * @throws RecipeException if there was an error parsing the ingredient amount when setting up the recipe.
+     */
     @Test
     public void testSetPriceWithPositiveNumber() throws RecipeException {
         recipe1.setPrice("0");
@@ -110,18 +185,27 @@ public class RecipeTest {
         assertEquals(100, recipe1.getPrice());
     }
 
+    /**
+     * Given a null to setName()
+     */
     @Test
     public void testSetNameWithNull() {
         recipe1.setName(null);
         assertTrue(recipe1.getName().isEmpty()); // default name is empty string
     }
 
+    /**
+     * Given a command name as a String to setName()
+     */
     @Test
     public void testSetNameWithString() {
         recipe1.setName("Coffee");
         assertEquals("Coffee", recipe1.getName());
     }
 
+    /**
+     * Test toString() that show properly
+     */
     @Test
     public void testToString() {
         assertEquals("", recipe1.toString()); // default name is empty string
@@ -147,12 +231,20 @@ public class RecipeTest {
                                                         // from prime(31) * result(1) + 0 (if name = null)
     }
 
+    /**
+     * Given string object to compare with Recipe object
+     */
     @Test
     public void testEqualButNotTheSameClass() {
         String s1 = "obj";
         assertFalse(recipe1.equals(s1));
     }
 
+    /**
+     * Test equal with recipe name is null
+     * @throws NoSuchFieldException Signals that the class doesn't have a field of a specified name.
+     * @throws IllegalAccessException create an instance but the currently executing method does not have access to the definition of the specified field,
+     */
     @Test
     public void testEqualWithNameNull() throws NoSuchFieldException, IllegalAccessException {
         Recipe recipe3 = new Recipe();
