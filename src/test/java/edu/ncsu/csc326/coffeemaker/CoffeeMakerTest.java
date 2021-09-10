@@ -19,6 +19,7 @@
 package edu.ncsu.csc326.coffeemaker;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,12 +38,26 @@ public class CoffeeMakerTest {
 	 * The object under test.
 	 */
 	private CoffeeMaker coffeeMaker;
+
+	/**
+	 * Coffee maker with recipe book mock and inventory mock
+	 */
+	private CoffeeMaker coffeeMaker1;
+
+	/**
+	 * Coffee maker with recipe book mock
+	 */
+	private CoffeeMaker coffeeMaker2;
 	
 	// Sample recipes to use in testing.
 	private Recipe recipe1;
 	private Recipe recipe2;
 	private Recipe recipe3;
 	private Recipe recipe4;
+
+	private RecipeBook recipeBook;
+	private Inventory inventory;
+	private Recipe[] recipes;
 
 	/**
 	 * Initializes some recipes to test with and the {@link CoffeeMaker} 
@@ -90,6 +105,13 @@ public class CoffeeMakerTest {
 		recipe4.setAmtMilk("1");
 		recipe4.setAmtSugar("1");
 		recipe4.setPrice("65");
+
+		recipeBook = mock(RecipeBook.class);
+		inventory = mock(Inventory.class);
+
+		recipes = new Recipe[]{recipe1, recipe2, recipe3};
+		coffeeMaker1 = new CoffeeMaker(recipeBook, inventory);
+		coffeeMaker2 = new CoffeeMaker(recipeBook, new Inventory());
 	}
 
 	/**
@@ -393,5 +415,113 @@ public class CoffeeMakerTest {
 		s1.append("15");
 		s1.append("\n");
 		assertEquals(s1.toString(), coffeeMaker.checkInventory());
+	}
+
+	/**
+	 * Test make coffee when has enough ingredient and has enough money.
+	 */
+	@Test
+	public void testPurchaseBeverageEnoughIngredientEnoughMoneyByMock() {
+		// recipe1 price = 50
+		when(recipeBook.getRecipes()).thenReturn(recipes);
+		when(inventory.useIngredients(any(Recipe.class))).thenReturn(true);
+		// 100 - 50 = 50
+		assertEquals(50, coffeeMaker1.makeCoffee(0, 100));
+		// verify method call
+		verify(recipeBook, atLeastOnce()).getRecipes();
+		verify(inventory, only()).useIngredients(any(Recipe.class));
+	}
+
+	/**
+	 * Test make coffee when has enough ingredient but not has enough money.
+	 */
+	@Test
+	public void testPurchaseBeverageEnoughIngredientNotEnoughMoneyByMock() {
+		// recipe1 price = 50
+		when(recipeBook.getRecipes()).thenReturn(recipes);
+		when(inventory.useIngredients(any(Recipe.class))).thenReturn(true);
+		// 50 > 10
+		assertEquals(10, coffeeMaker1.makeCoffee(0, 10));
+		// verify method call
+		verify(recipeBook, atLeastOnce()).getRecipes();
+		verify(inventory, never()).useIngredients(any(Recipe.class));
+	}
+
+	/**
+	 * Test make coffee when ingredient not enough but has enough money.
+	 */
+	@Test
+	public void testPurchaseBeverageNotEnoughIngredientEnoughMoneyByMock() {
+		// recipe1 price = 50
+		when(recipeBook.getRecipes()).thenReturn(recipes);
+		when(inventory.useIngredients(any(Recipe.class))).thenReturn(false);
+		assertEquals(100, coffeeMaker1.makeCoffee(0, 100));
+		// verify method call
+		verify(recipeBook, atLeastOnce()).getRecipes();
+		verify(inventory, only()).useIngredients(any(Recipe.class));
+	}
+
+	/**
+	 * Test make coffee when ingredient and money not enough.
+	 */
+	@Test
+	public void testPurchaseBeverageNotEnoughIngredientNotEnoughMoneyByMock() {
+		// recipe1 price = 50
+		when(recipeBook.getRecipes()).thenReturn(recipes);
+		when(inventory.useIngredients(any(Recipe.class))).thenReturn(false);
+		assertEquals(10, coffeeMaker1.makeCoffee(0, 10));
+		verify(recipeBook, atLeastOnce()).getRecipes();
+		verify(inventory, never()).useIngredients(any(Recipe.class));
+	}
+
+	/**
+	 * The units of each item in the inventory are displayed (return as string)
+	 * amount of all ingredient default is 15
+	 * Test by using mock recipe book
+	 */
+	@Test
+	public void testInventoryWhenPurchaseBeverageByMock() {
+		when(recipeBook.getRecipes()).thenReturn(recipes);
+		coffeeMaker2.makeCoffee(0, 100);
+		StringBuffer s1 = new StringBuffer();
+		s1.append("Coffee: ");
+		s1.append("12");
+		s1.append("\n");
+		s1.append("Milk: ");
+		s1.append("14");
+		s1.append("\n");
+		s1.append("Sugar: ");
+		s1.append("14");
+		s1.append("\n");
+		s1.append("Chocolate: ");
+		s1.append("15");
+		s1.append("\n");
+		assertEquals(s1.toString(), coffeeMaker2.checkInventory());
+	}
+
+	/**
+	 * Extra Test
+	 * I'm not sure about this test much, but coursera mention that 
+	 * "In addition, we want to verify that the getAmtChocolate(), getAmtCoffee(), getAmtMilk(), 
+	 * and getPrice() methods are being called once for the selected recipe and zero times for the other recipes".
+	 */
+	@Test
+	public void testNumberOfTimeGetMethodCalled() {
+		recipes[0] = mock(Recipe.class);
+		recipes[1] = mock(Recipe.class);
+		when(recipeBook.getRecipes()).thenReturn(recipes);
+		coffeeMaker2.makeCoffee(0, 100);
+		// selected recipe
+		verify(recipes[0], only()).getAmtChocolate();
+		verify(recipes[0], only()).getAmtCoffee();
+		verify(recipes[0], only()).getAmtMilk();
+		verify(recipes[0], only()).getAmtSugar();
+		verify(recipes[0], only()).getPrice();
+		// not selected recipe
+		verify(recipes[1], never()).getAmtChocolate();
+		verify(recipes[1], never()).getAmtCoffee();
+		verify(recipes[1], never()).getAmtMilk();
+		verify(recipes[1], never()).getAmtSugar();
+		verify(recipes[1], never()).getPrice();
 	}
 }
