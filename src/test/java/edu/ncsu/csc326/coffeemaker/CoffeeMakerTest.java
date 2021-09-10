@@ -475,8 +475,7 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * The units of each item in the inventory are displayed (return as string)
-	 * amount of all ingredient default is 15
+	 * When user purchase beverage the ingredient in inventory should decrease with require ingredient in recipe.
 	 * Test by using mock recipe book
 	 */
 	@Test
