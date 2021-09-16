@@ -1,17 +1,15 @@
 package edu.ncsu.csc326.coffeemaker;
 import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
-import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class AddInventoryCucumberTest {
 
     private CoffeeMaker coffeeMaker;
-    private InventoryException inventoryException;
+    private Exception exception;
 
     @Given("Turn on the coffee maker")
     public void turnOnTheCoffeeMaker() {
@@ -23,8 +21,8 @@ public class AddInventoryCucumberTest {
     public void iAddCoffeeAddMilkAddSugarAddChocolate(Integer amtCoffee, Integer amtMilk, Integer amtSugar, Integer amtChocolate) throws InventoryException {
         try {
             coffeeMaker.addInventory(amtCoffee.toString(), amtMilk.toString(), amtSugar.toString(), amtChocolate.toString());
-        } catch (InventoryException e) {
-            inventoryException = e;
+        } catch (Exception e) {
+            exception = e;
         }
     }
 
@@ -44,5 +42,13 @@ public class AddInventoryCucumberTest {
         s1.append(amtChocolate.toString());
         s1.append("\n");
         assertEquals(s1.toString(), coffeeMaker.checkInventory());
+    }
+
+    @Then("Throw {word} exception")
+    public void throwInventoryException(String exceptionType) {
+        if (exceptionType.equals("inventory")) {
+            assertEquals(InventoryException.class, exception.getClass());
+        }
+        else fail();
     }
 }
