@@ -6,7 +6,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
 
-public class AddInventoryCucumberTest {
+public class CoffeeMakerCucumberTest {
 
     private CoffeeMaker coffeeMaker;
     private Exception exception;
@@ -50,5 +50,30 @@ public class AddInventoryCucumberTest {
             assertEquals(InventoryException.class, exception.getClass());
         }
         else fail();
+    }
+
+    @When("I add {int} recipe(s)")
+    public void iAddARecipe(Integer num) {
+        for (int i = 0; i< num; i++) {
+            Recipe recipe = new Recipe();
+            recipe.setName("Recipe " + (i+1));
+            coffeeMaker.addRecipe(recipe);
+        }
+    }
+
+    @Then("recipe book has {int} recipe(s)")
+    public void recipeBookHasRecipe(Integer num) {
+        int countRecipe = 0;
+        for (Recipe recipe: coffeeMaker.getRecipes()) {
+            if (recipe != null) {
+                if (recipe.getClass() == Recipe.class) countRecipe++;
+            }
+        }
+        assertEquals(num.intValue(), countRecipe);
+    }
+
+    @When("I delete recipe number {int}")
+    public void iDeleteRecipeNumber(Integer num) {
+        coffeeMaker.deleteRecipe(num);
     }
 }
